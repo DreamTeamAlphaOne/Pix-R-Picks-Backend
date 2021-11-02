@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Movie List</h1>
+{% for movie in object_list %}
+    <h2>{{movie.title}}</h2>
+{% endfor %}
+
+{% endblock content %}
