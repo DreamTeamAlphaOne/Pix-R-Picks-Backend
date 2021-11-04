@@ -8,6 +8,7 @@ authors = ["Kassie Bradshaw <kassie.r.bradshaw@gmail.com>"]
 python = "^3.9"
 Django = "^3.2.9"
 django-environ = "^0.8.1"
+djangorestframework = "^3.12.4"
 
 [tool.poetry.dev-dependencies]
 

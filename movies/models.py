@@ -19,8 +19,9 @@ class CustomUser(AbstractUser):
 class Movie(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField(default='')
+    score = models.JSONField(default=list, blank=True)
     dateAdded = models.DateField(auto_now_add=True)
-    score = models.CharField(default=0, max_length=10)
+    owner = models.ForeignKey(CustomUser, on_delete=models.RESTRICT, null=True, blank=True)
 
     def __str__(self):
         return self.title
