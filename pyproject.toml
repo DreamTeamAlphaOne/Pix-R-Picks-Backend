@@ -8,6 +8,9 @@ authors = ["Kassie Bradshaw <kassie.r.bradshaw@gmail.com>"]
 python = "^3.9"
 Django = "^3.2.9"
 django-environ = "^0.8.1"
+text2emotion = "^0.0.5"
+jupyterlab = "^3.2.1"
+PyPDF2 = "^1.26.0"
 
 [tool.poetry.dev-dependencies]
 
