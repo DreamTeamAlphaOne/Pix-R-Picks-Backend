@@ -3,7 +3,7 @@ from .models import MovieSuggestion, MovieSelection
 from rest_framework import generics
 from .serializers import SelectionSerializer, SelectionSerializer, SuggestionSerializer
 from .permissions import IsOwnerOrReadOnly
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class MovieSuggestionList(generics.ListAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
