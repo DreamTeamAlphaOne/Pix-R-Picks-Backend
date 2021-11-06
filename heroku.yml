@@ -1,0 +1,9 @@
+build:
+  docker:
+    web:
+releases:
+  image: web
+  command:
+    - python manage.py collectstatic --noinput
+run:
+  web: gunicorn pix_r_picks_backend.wsgi
