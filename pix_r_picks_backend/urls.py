@@ -18,11 +18,13 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='api/movies/')),
     path('api/movies/', include('movies.urls')),
     path('api-auth/', include('rest_framework.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair,'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
+]
 

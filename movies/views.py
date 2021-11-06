@@ -3,6 +3,7 @@ from .models import MovieSuggestion, MovieSelection
 from rest_framework import generics
 from .serializers import SelectionSerializer, SelectionSerializer, SuggestionSerializer
 from .permissions import IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class MovieSuggestionList(generics.ListAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
@@ -15,12 +16,13 @@ class MovieSuggestionDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SuggestionSerializer
 
 class MovieSelectionList(generics.ListAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    # permission_classes = (IsOwnerOrReadOnly,)
+    # permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = MovieSelection.objects.all()
     serializer_class = SelectionSerializer
 
 class MovieSelectionDetails(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    # permission_classes = (IsOwnerOrReadOnly,)
     queryset = MovieSelection.objects.all()
     serializer_class = SelectionSerializer
     
