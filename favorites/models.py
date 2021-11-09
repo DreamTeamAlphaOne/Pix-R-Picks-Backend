@@ -11,7 +11,7 @@ class FavMovie(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.movie} -- {self.user}'
+        return f'{self.movie.title} -- {self.owner.email}'
     
     def get_absolute_url(self):
         return reverse('fav_movie_details', args=[str(self.id)])
