@@ -1,28 +1,18 @@
 from django.shortcuts import render
-from .models import MovieSuggestion, MovieSelection
+from .models import Movie
 from rest_framework import generics
-from .serializers import SelectionSerializer, SelectionSerializer, SuggestionSerializer
+from .serializers import MovieSerializer
 from .permissions import IsOwnerOrReadOnly
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-class MovieSuggestionList(generics.ListAPIView):
+class MovieList(generics.ListAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
-    queryset = MovieSuggestion.objects.all()
-    serializer_class = SuggestionSerializer
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
 
-class MovieSuggestionDetails(generics.RetrieveUpdateDestroyAPIView):
+class MovieDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
-    queryset = MovieSuggestion.objects.all()
-    serializer_class = SuggestionSerializer
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
 
-class MovieSelectionList(generics.ListAPIView):
-    # permission_classes = (IsOwnerOrReadOnly,)
-    # permission_classes = (IsAuthenticatedOrReadOnly,)
-    queryset = MovieSelection.objects.all()
-    serializer_class = SelectionSerializer
-
-class MovieSelectionDetails(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = (IsOwnerOrReadOnly,)
-    queryset = MovieSelection.objects.all()
-    serializer_class = SelectionSerializer
     
