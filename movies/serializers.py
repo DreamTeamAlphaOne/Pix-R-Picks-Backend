@@ -1,13 +1,8 @@
 from rest_framework import serializers
-from .models import MovieSuggestion, MovieSelection
+from .models import Movie
 
-class SuggestionSerializer(serializers.ModelSerializer):
+class MovieSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('title', 'description', 'emotion_score')
-        model = MovieSuggestion
-
-class SelectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = ('movie', 'user')
-        model = MovieSelection
+        model = Movie
+        fields = "__all__"
         
