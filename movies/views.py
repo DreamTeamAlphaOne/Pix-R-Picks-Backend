@@ -4,6 +4,9 @@ from rest_framework import generics
 from .serializers import MovieSerializer
 from .permissions import IsOwnerOrReadOnly
 import random
+from rest_framework import Response
+from rest_framework import status
+
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 movie_scores = {'a bugs life':{'Happy': 0.08, 'Angry': 0.08, 'Surprise': 0.32, 'Sad': 0.22, 'Fear': 0.29}, 'brave':{'Happy': 0.11, 'Angry': 0.1, 'Surprise': 0.18, 'Sad': 0.28, 'Fear': 0.33}, 'cars':{'Happy': 0.14, 'Angry': 0.06, 'Surprise': 0.31, 'Sad': 0.25, 'Fear': 0.25}, 'cars 2':{'Happy': 0.1, 'Angry': 0.08, 'Surprise': 0.26, 'Sad': 0.22, 'Fear': 0.35}, 'cars 3':{'Happy': 0.12, 'Angry': 0.06, 'Surprise': 0.24, 'Sad': 0.26, 'Fear': 0.31}, 'coco':{'Happy': 0.08, 'Angry': 0.08, 'Surprise': 0.28, 'Sad': 0.23, 'Fear': 0.32}, 'finding dory':{'Happy': 0.09, 'Angry': 0.09, 'Surprise': 0.27, 'Sad': 0.24, 'Fear': 0.32}, 'finding_nemo':{'Happy': 0.11, 'Angry': 0.09, 'Surprise': 0.25, 'Sad': 0.25, 'Fear': 0.31}, 'the good dinosaur':{'Happy': 0.12, 'Angry': 0.08, 'Surprise': 0.22, 'Sad': 0.2, 'Fear': 0.38}, 'the incredibles':{'Happy': 0.1, 'Angry': 0.09, 'Surprise': 0.26, 'Sad': 0.23, 'Fear': 0.33}, 'the incredibles 2':{'Happy': 0.13, 'Angry': 0.07, 'Surprise': 0.28, 'Sad': 0.23, 'Fear': 0.29}, 'inside out':{'Happy': 0.13, 'Angry': 0.06, 'Surprise': 0.21, 'Sad': 0.31, 'Fear': 0.29}, 'monsters inc':{'Happy': 0.12, 'Angry': 0.08, 'Surprise': 0.29, 'Sad': 0.2, 'Fear': 0.31}, 'monsters university':{'Happy': 0.12, 'Angry': 0.1, 'Surprise': 0.28, 'Sad': 0.2, 'Fear': 0.3}, 'onward':{'Happy': 0.09, 'Angry': 0.09, 'Surprise': 0.28, 'Sad': 0.2, 'Fear': 0.35}, 'ratatouille':{'Happy': 0.1, 'Angry': 0.08, 'Surprise': 0.25, 'Sad': 0.25, 'Fear': 0.32}, 'soul':{'Happy': 0.11, 'Angry': 0.06, 'Surprise': 0.33, 'Sad': 0.2, 'Fear': 0.3},'toy story':{'Happy': 0.07, 'Angry': 0.08, 'Surprise': 0.36, 'Sad': 0.17, 'Fear': 0.32}, 'toy story 2':{'Happy': 0.1, 'Angry': 0.05, 'Surprise': 0.4, 'Sad': 0.22, 'Fear': 0.23}, 'toy story 3':{'Happy': 0.09, 'Angry': 0.09, 'Surprise': 0.28, 'Sad': 0.18, 'Fear': 0.36}, 'toy story 4':{'Happy': 0.11, 'Angry': 0.08, 'Surprise': 0.31, 'Sad': 0.21, 'Fear': 0.3}, 'up':{'Happy': 0.08, 'Angry': 0.14, 'Surprise': 0.2, 'Sad': 0.22, 'Fear': 0.35}, 'wall-e':{'Happy': 0.07, 'Angry': 0.14, 'Surprise': 0.21, 'Sad': 0.19, 'Fear': 0.39}, 'how to train your dragon':{'Happy': 0.06, 'Angry': 0.13, 'Surprise': 0.21, 'Sad': 0.21, 'Fear': 0.39}, 'frozen':{'Happy': 0.11, 'Angry': 0.09, 'Surprise': 0.27, 'Sad': 0.23, 'Fear': 0.3}}
@@ -61,10 +64,18 @@ def find_queryset(emotion):
 
 
 class MovieList(generics.ListAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
-    #queryset = find_queryset('Surprise')
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+
+    def get(self, request, format=None):
+        permission_classes = (IsOwnerOrReadOnly,)
+        #queryset = Movie.objects.all()
+        queryset = find_queryset(request.query_params['emotion'])
+        serializer_class = MovieSerializer
+        return Response(serializer.data)
+
+    # permission_classes = (IsOwnerOrReadOnly,)
+    # queryset = find_queryset(request.query_params['emotion'])
+    # #queryset = Movie.objects.all()
+    # serializer_class = MovieSerializer
 
 class MovieDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
