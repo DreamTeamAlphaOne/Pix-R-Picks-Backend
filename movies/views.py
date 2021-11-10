@@ -4,7 +4,7 @@ from rest_framework import generics
 from .serializers import MovieSerializer
 from .permissions import IsOwnerOrReadOnly
 import random
-from rest_framework import Response
+from rest_framework import response
 from rest_framework import status
 
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly
