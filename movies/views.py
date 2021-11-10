@@ -71,7 +71,7 @@ class MovieList(generics.ListAPIView):
     def get(self, request, format=None):
         #queryset = Movie.objects.all()
         queryset = find_queryset(request.query_params['emotion'])
-        return Response(serializer.data)
+        return response(serializer.data)
 
     # permission_classes = (IsOwnerOrReadOnly,)
     # queryset = find_queryset(request.query_params['emotion'])
