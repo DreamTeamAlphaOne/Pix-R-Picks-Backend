@@ -65,11 +65,12 @@ def find_queryset(emotion):
 
 class MovieList(generics.ListAPIView):
 
+    permission_classes = (IsOwnerOrReadOnly,)
+    serializer_class = MovieSerializer
+
     def get(self, request, format=None):
-        permission_classes = (IsOwnerOrReadOnly,)
         #queryset = Movie.objects.all()
         queryset = find_queryset(request.query_params['emotion'])
-        serializer_class = MovieSerializer
         return Response(serializer.data)
 
     # permission_classes = (IsOwnerOrReadOnly,)
