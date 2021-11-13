@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from movies.models import Movie
 
-# Create your models here.
+
 class FavMovie(models.Model):
     """ Model representing the selected Movie Objects the users want to save to their own lists """
     

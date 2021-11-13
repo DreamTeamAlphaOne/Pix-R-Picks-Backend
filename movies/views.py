@@ -34,20 +34,39 @@ def find_movies_from_emotions(scores_dict, emotion, number_of_recs):
         return rand_movies
     
     for movie in scores_dict:
-        #pushes the first 6 movies into holding dictionary with name as key and score of given emotion as value
         if len(top_6_dict) <= 8:
             top_6_dict[movie] = scores_dict[movie][emotion]
         if len(top_6_dict) > 8:
-            #checks to see if movie's score for given emotion is higher than the lowest value of chosen emotion in holding dictionary
             if find_dict_minimum(top_6_dict) < scores_dict[movie][emotion]:
-                #replaces movie with lowest score
                 top_6_dict[movie] = scores_dict[movie][emotion]
                 top_6_dict.pop(get_key_with_min(top_6_dict))
-            
     
-    #print(top_6_dict)
     return list(get_random_results(top_6_dict))
 
+def find_common_likes(list_of_lists, movie):
+    '''searches all user likes that include a given movie and finds the most common liked movie'''
+    movies_in_common = {}
+    for lst in list_of_lists:
+        if movie in lst:
+            for item in lst:
+                if item != movie:
+                    if item in movies_in_common:
+                        movies_in_common[item] += 1
+                    else:
+                        movies_in_common[item] = 1
+
+    def find_most_common(movies_in_common):
+        '''finds the movie with the highest value'''
+        highest_score = 0
+        most_common_movie = ''
+    
+        for movie in movies_in_common:
+            if movies_in_common[movie] > highest_score:
+                highest_score = movies_in_common[movie]
+                most_common_movie = movie
+        return most_common_movie
+
+    return find_most_common(movies_in_common)
 
 
 def find_queryset(emotion):
@@ -71,8 +90,6 @@ class MovieList(generics.ListAPIView):
 
     def get_queryset(self):
         passed_emotion = self.request.query_params.get('emotion')
-        #passed_emotion = ('sad')
-        #return Movie.objects.all()
         return find_queryset(passed_emotion)
 
 
